@@ -1,0 +1,16 @@
+{
+  "name": "driver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "driver.js",
+  "dependencies": {
+    "concurrently": "^5.2.0",
+    "socket.io": "^2.3.0"
+  },
+  "scripts": {
+    "start": "node driver.js",
+    "s": "concurrently \"cd ../device && npm run start\" \"npm run start\""
+  },
+  "author": "",
+  "license": "ISC"
+}

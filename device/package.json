@@ -1,0 +1,15 @@
+{
+  "name": "device",
+  "version": "1.0.0",
+  "description": "",
+  "main": "device.js",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node device.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
