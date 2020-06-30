@@ -5,7 +5,7 @@ const socket = io.connect("http://localhost:4200/", {
 
 const getcurrWeight = () => {
     const weight = Math.floor(Math.random() * 6) + 1;
-    console.log(weight)
+    console.log(">>>> "+ weight +" Kg")
     return weight;
 };
 
@@ -25,40 +25,44 @@ const getRespone = (stableWeight) => {
     return res;
 }
 
+let readerBusy= false;
+
 const shortPerReading = () => {
+    readerBusy= true;
     let reading = [];
     return new Promise((resolve, reject) => {
         const readweights = () => {
+            if(reading.length === 0){console.log('++++++++++ current weight fluctuations ++++++++++++++++')}
             w = getcurrWeight();
             reading.push(w);
             if (reading.length < 10) {
                 setTimeout(() => {
                     readweights()
-                }, 10)
+                },400)
             }else{
                 resolve(reading)
             }
         }
         readweights();
-        console.log('++++++++++ current weight fluctuations ++++++++++++++++');
     })
 }
 
 socket.on('connect', () => {
-    console.log("Device online")
+    console.log("Device online and listening")
 });
 
 socket.on('driverEvent', (command) => {
-    console.log('Listening');
-
-    if (command === 's') {
+    if (command === 's' && !readerBusy) {
         console.log('command recognized');
         shortPerReading().then(readings => {
             stableWeight = avg(readings);
             res = getRespone(stableWeight);
             socket.emit('deviceEvent', res);
+            readerBusy= false;
         })
-    } else {
+    } else if(!readerBusy) {
         socket.emit('deviceEvent', "S_I"); // response - command not executable
+    }else{
+        socket.emit('deviceEvent', "reader busy"); ;
     }
 })

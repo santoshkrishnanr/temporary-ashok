@@ -4,12 +4,10 @@
   "description": "",
   "main": "driver.js",
   "dependencies": {
-    "concurrently": "^5.2.0",
-    "socket.io": "^2.3.0"
+     "socket.io": "^2.3.0"
   },
   "scripts": {
-    "start": "node driver.js",
-    "s": "concurrently \"cd ../device && npm run start\" \"npm run start\""
+    "start": "node driver.js"
   },
   "author": "",
   "license": "ISC"
